@@ -1,0 +1,41 @@
+package com.ZhiyueSecondHand.agent;
+
+import com.ZhiyueSecondHand.constants.ChatClientSkills;
+import com.ZhiyueSecondHand.enums.ChatModelType;
+import lombok.RequiredArgsConstructor;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.api.Advisor;
+import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Map;
+
+@Component
+@RequiredArgsConstructor
+public class RouterAgent extends AbstarctAgent {
+
+    private final ChatMemory redisRouterChatMemory;
+
+    @Override
+    public ChatModelType getChatModelType() {
+        return ChatModelType.ROUTER;
+    }
+
+    @Override
+    public String getSystemPrompt() {
+        return ChatClientSkills.ROUTER_PROMPT;
+    }
+
+    @Override
+    public Map<String, Object> adviorsParams(String conversationId, String requestId) {
+        return Map.of(ChatMemory.CONVERSATION_ID, conversationId);
+    }
+
+    @Override
+    public List<Advisor> getAdvisor() {
+        return List.of(
+                MessageChatMemoryAdvisor.builder(redisRouterChatMemory).build()
+        );
+    }
+}

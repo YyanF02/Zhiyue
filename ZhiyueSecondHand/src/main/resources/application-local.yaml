@@ -1,0 +1,54 @@
+spring:
+  ai:
+    my-api-key: sk-914950dc3ae742caa504257defe4904f
+    my-chat-model: qwen3.5-plus
+    my-embedding-model: text-embedding-v4
+    embedding:
+      dimensions: 1024
+vectorstore:
+  milvus:
+    host: "localhost"
+    port: 19530
+    username: ''
+    password: ''
+    databaseName: "ap"
+    collectionName: "ZhiyueSecondHand_store"
+mysql:
+  pw: 1234
+  un: root
+  port: 3306
+  host: localhost
+  schema: ZhiyueSecondHand
+redis:
+  pw: 123456
+  host: localhost
+  port: 6380
+mq:
+  un: root
+  pw: 1234
+  host: localhost
+  port: 5672
+  virtual-host: /
+minio:
+  secret-key: Admin@123456
+  bucket: book
+  read-path: http://localhost:9100
+  access-key: admin
+  endpoint: http://localhost:9100
+# 支付宝配置https://openapi-sandbox.dl.alipaydev.com/gateway.do
+alipay:
+  # 沙箱网关
+  server-url: https://openapi-sandbox.dl.alipaydev.com/gateway.do
+  app-id: 9021000162671686
+  # 你的私钥
+  private-key: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDVU1q8hqoKw5pg6M3uathzfUZC4eI9YTHWf7b1f9tB6UhhpA6KJPzp5a2hwncYMbm3x4mkbQfv2g2socqmsIDZY3HDhN8OSRJyAuLSiwR6QGGYcz0XoDYI7jw/xOWPGXRfWdBko7OMZrjAM0WHvIhCgzVrnq1TO9x66jOMudLGv1sHJBV8MpOEn8W4V+/JXcjZefO51CBFGGwm9B0H7rcOkWBa8zdCrDKi3RygdJ9iW4Zgc1SFH5v3Q4NqjAX1HfamJpgdMGreUzMoAEmjjvSEkw82TM61ymjzDMVyh1DV6R38GesXQobXvAYO9r7gRGw4Ot4Iqp4bLFTLxXnhzI7NAgMBAAECggEBAK4qCZCV2UpEfEvWhhq6/ND9XFnKla1LJydaygMRSe88CK4/BOfgXuSPcfz5CcalAl16+XNW2P4H5tYkmZER1YCmYgEhAANnwTl4BbujaBpvab7Phvc9BCCycFoX5Nu6Cnq2lx8zT6m3S+sPcRrq38x91yVwPU4RN2baww+HvwAnSQ242NoBGXrM+nAez+WR242e7TRlFzTta5aC/8t+81BhiyFWNVerva7+HtDXBYVbzw6D5oGCBGQDSAiblSgbDeYeVbRpj6I+iHfzptWK51dlbQdgTBd7flwyPOdX8NvRkhPOUmeNfnvtqkZQxInG8rRmNzDjl2w/FhY6i++2EbkCgYEA69t3IO6nUNvNs5AfN6vbHjwMpsB1PJUxuCDbDB+BDum4iDQBsl/u6WjMg9tQadHh4MQdUd21JyrIglrYGMf38fqih4+eR6I7ZZmayx6EUphSJ8vFrQgCANbL8a5Iq/fZDYbIXvmuhFYSROwR6R0SWW1HcueWE5kqjQDBr9L/PkMCgYEA54tHuMzESN7HMdDUzxkl6wuwQExj242pBNMwG1X2G29HxVDqlAspz7dETwRdX3I2KgjpPAN1LwCOgW4moaZKkmaUXI5gzyIwWBWp3uSlmTuWK+XT8dNB0bS7ksaarYnB8++eR8FLhjeeCAr3YqAbxAYSzBisxenAeGR/tRJcla8CgYAk/DxZILOCHYXLQ61xiHSK8DW3rHR19JtgWV6gLwyI7yOt0CH3+802MuXnQ2v/vBbkrTw/yzmOE8pvjplWgX0jJ/92rJHQf+M6knTQp09uuE4hyXWNJbVStlwy4PaqaOpTkbA4HIU+YVTqE+7XFGT9OwK6RRCmsB0ZEWZOERNPiwKBgQDPwZVVJ8ZnbB1ngW2xdWskf5Rh3SkscutZPPVJUdRFwY+waG5S78FQc6yDCfOOFLis9tnv01puFh3H3MIlAUSgIBK3CbmroY2nO6j0Kky8NU8FjG6j6V6Bf51ekX1wgM7axgJLeBEAGR9fMBfREsBXHuv23Z0I6Dieze4Y1qTkWQKBgBSHpjziyZFcVZnLrmKB1EaZRNbwV8gBAeTILlU3XAbGoJv+ln3QeRI2Xcw72/vjpqyZL7n5xWYDgXOgeKvCn47PV1TllXLU2no1Ik+/uUsJ1GYeML38xdp8NH590VsZqAnm/DbVdoe09Gu2Z40I/FUaHyRKoKFwW8iRWfby+lqE
+  # 支付宝公钥
+  alipay-public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAi485HdTRsoNxlRZgzgQKdVl/MuApGNyKO4ApuR85FHDqCgo+Ko5IrbcuLdr9tbQj8uby8PMLbmyVLlq6eC6IUjZWpmZNI1CK8LeLdxedyCOs1GsWRzDiKVvytpJYZ4wbn3vmwXHZtuaV54iYzM1ock+kKgqiFt9DN9ZidkYo6SNJHe/iwWrMhwzaOmcBQmTgqAe5kElmYXNsw+F6OnQ23D9iEO82gOZLkaqD/LXsPcpxE1vZPaMiQcG31AJ1llCwsod9J11cAePAk217Su/HV26ax9QQnIn85Tmafgot9NiEOIq9ulLOI4+BlfaPgcDk06R/mBoOHZIYdKcuF3mmqQIDAQAB
+  format: json
+  charset: UTF-8
+  sign-type: RSA2
+
+# 外网访问地址配置
+server:
+  external-url: https://1cb1d084.r15.vip.cpolar.cn
+  vue-url: https://78dfe56d.r15.vip.cpolar.cn

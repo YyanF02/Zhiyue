@@ -1,0 +1,138 @@
+spring:
+  application:
+    name: ZhiyueSecondHand
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  ai:
+    retry:
+      max-attempts: 30
+      backoff:
+        initial-interval: 2000
+        multiplier: 2
+        max-interval: 10000
+    dashscope:
+      api-key: ${spring.ai.my-api-key}
+      chat:
+        options:
+          model: ${spring.ai.my-chat-model}
+      embedding:
+        enabled: true
+        options:
+          model: ${spring.ai.my-embedding-model}
+          dimensions: ${spring.ai.embedding.dimensions}
+    vectorstore:
+      milvus:
+        client:
+          host: ${vectorstore.milvus.host}        # Milvus 地址
+          port: ${vectorstore.milvus.port}              # Milvus 默认端口
+          username: ${vectorstore.milvus.username}                   # 用户名（空=不用）
+          password: ${vectorstore.milvus.password}                   # 密码（空=不用）
+        databaseName: ${vectorstore.milvus.databaseName}         # 数据库名
+        collectionName: ${vectorstore.milvus.collectionName}  # 表名（集合名）
+        embeddingDimension: ${spring.ai.embedding.dimensions}   # 向量维度（必须和你的模型一致）
+        indexType: HNSW
+        indexParameters: '{"M":16,"efConstruction":128}'
+        metricType: COSINE         # 相似度算法：余弦相似度
+        initialize-schema: true    # 自动建表
+
+  #    chat:
+  #      memory:
+  #        repository:
+  #          jdbc:
+  #            schema: classpath:org/springframework/ai/chat/memory/repository/jdbc/schema-@@platform@@.sql
+  #      base-url: https://dashscope.aliyuncs.com/api/v1
+  datasource:
+    password: ${mysql.pw}
+    username: ${mysql.un}
+    url: jdbc:mysql://${mysql.host}:${mysql.port}/${mysql.schema}?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&zeroDateTimeBehavior=convertToNull
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      host: ${redis.host}
+      port: ${redis.port}
+      password: ${redis.pw}
+      jedis:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+          time-between-eviction-runs: 30000ms
+  rabbitmq:
+    host: ${mq.host}
+    port: ${mq.port}
+    username: ${mq.un}
+    password: ${mq.pw}
+    virtual-host: ${mq.virtual-host}       # 虚拟主机
+    # 连接池配置
+    connection-timeout: 5000ms
+    template:
+      retry:
+        enabled: true     # 生产者发送消息失败重试
+        max-attempts: 3
+    # 消费者重试
+    listener:
+      simple:
+        acknowledge-mode: auto  # 自动确认消息
+        retry:
+          enabled: true          # 开启消费重试
+          initial-interval: 1000ms
+          multiplier: 1.5
+          max-interval: 10000ms
+          max-attempts: 3
+        default-requeue-rejected: false # 重试耗尽不重回队列
+  profiles:
+    active: local
+logging:
+  level:
+    org.springframework.ai: info
+    com.ap: info
+
+login:
+  include-paths:
+    - /**
+  exclude-paths:
+    - /user/login/**
+    - /user/check
+    - /user/pwd/forget
+    - /user/wx/check
+    - /code/**
+    - /capture/**
+    - /wechat-auth
+    - /image/book/**
+    - /pay/notify
+    - /doc.html
+    - /v3/api-docs/**
+    - /webjars/**
+    - /swagger-resources/**
+    - /favicon.ico
+    - /swagger-ui.html
+    - /swagger-ui/**
+    - /actuator/**
+minio:
+  secret-key: ${minio.secret-key}
+  bucket: ${minio.bucket}
+  read-path: ${minio.read-path}
+  access-key: ${minio.access-key}
+  endpoint: ${minio.endpoint}
+
+
+# 支付宝配置
+alipay:
+  # 沙箱网关
+  server-url: ${alipay.server-url}
+  app-id: ${alipay.app-id}
+  # 你的私钥
+  private-key: ${alipay.private-key}
+  # 支付宝公钥
+  alipay-public-key: ${alipay.alipay-public-key}
+  format: json
+  charset: UTF-8
+  sign-type: RSA2
+
+# 外网访问地址配置
+server:
+  external-url: ${server.external-url}
+  vue-url: ${server.vue-url}
