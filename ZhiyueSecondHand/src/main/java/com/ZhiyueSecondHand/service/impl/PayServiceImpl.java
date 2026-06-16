@@ -135,7 +135,7 @@ public class PayServiceImpl implements IPayService {
                 return false;
             }
             OrderItem orderItem = collect.get(good.getId());
-            if (orderItem == null) continue;
+//            if (orderItem == null) continue;
 /*            if (good.getStock() < orderItem.getNum()) {
                 return false;
             }*/
