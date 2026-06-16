@@ -311,7 +311,6 @@ public class PayServiceImpl implements IPayService {
         }
         if (CollUtils.isEmpty(removeMembers)) return;
         redisTemplate.opsForSet().remove(key, removeMembers.toArray());
-
     }
 
     private Boolean CheckOrderStatusAndUpdate(String orderId) {

@@ -1,5 +1,6 @@
-package com.ZhiyueSecondHand.agent;
+package com.ZhiyueSecondHand.agent.impl;
 
+import com.ZhiyueSecondHand.agent.abstractAgent.AbstarctAgent;
 import com.ZhiyueSecondHand.constants.ChatClientSkills;
 import com.ZhiyueSecondHand.enums.ChatModelType;
 import lombok.RequiredArgsConstructor;
@@ -13,19 +14,18 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
-public class NormalAgent extends AbstarctAgent {
+public class RouterAgent extends AbstarctAgent {
 
-    private final ChatMemory redisChatMemory;
-
+    private final ChatMemory redisRouterChatMemory;
 
     @Override
     public ChatModelType getChatModelType() {
-        return ChatModelType.NORMAL;
+        return ChatModelType.ROUTER;
     }
 
     @Override
     public String getSystemPrompt() {
-        return ChatClientSkills.NORMAL_SKILL_PROMPT;
+        return ChatClientSkills.ROUTER_PROMPT;
     }
 
     @Override
@@ -35,6 +35,8 @@ public class NormalAgent extends AbstarctAgent {
 
     @Override
     public List<Advisor> getAdvisor() {
-        return List.of(MessageChatMemoryAdvisor.builder(redisChatMemory).build());
+        return List.of(
+                MessageChatMemoryAdvisor.builder(redisRouterChatMemory).build()
+        );
     }
 }

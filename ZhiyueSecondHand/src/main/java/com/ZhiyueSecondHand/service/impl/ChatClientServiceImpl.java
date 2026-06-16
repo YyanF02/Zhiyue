@@ -3,7 +3,7 @@ package com.ZhiyueSecondHand.service.impl;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import com.ZhiyueSecondHand.agent.Agent;
-import com.ZhiyueSecondHand.agent.RouterAgent;
+import com.ZhiyueSecondHand.agent.impl.RouterAgent;
 import com.ZhiyueSecondHand.domain.pojo.ChatList;
 import com.ZhiyueSecondHand.enums.ChatModelType;
 import com.ZhiyueSecondHand.exception.BusinessException;

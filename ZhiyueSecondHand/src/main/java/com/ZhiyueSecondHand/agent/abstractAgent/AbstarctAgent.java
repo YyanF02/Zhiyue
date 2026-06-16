@@ -1,7 +1,8 @@
-package com.ZhiyueSecondHand.agent;
+package com.ZhiyueSecondHand.agent.abstractAgent;
 
 
 import cn.hutool.core.util.IdUtil;
+import com.ZhiyueSecondHand.agent.Agent;
 import org.springframework.ai.chat.client.ChatClient;
 
 import org.springframework.beans.factory.annotation.Autowired;

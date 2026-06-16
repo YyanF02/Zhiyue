@@ -1,10 +1,9 @@
-package com.ZhiyueSecondHand.agent;
+package com.ZhiyueSecondHand.agent.impl;
 
+import com.ZhiyueSecondHand.agent.abstractAgent.AbstarctAgent;
 import com.ZhiyueSecondHand.constants.ChatClientSkills;
 import com.ZhiyueSecondHand.enums.ChatModelType;
-import com.ZhiyueSecondHand.tool.ToolService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.api.Advisor;
 import org.springframework.ai.chat.memory.ChatMemory;
@@ -15,38 +14,19 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
-public class BuyAgent extends AbstarctAgent {
+public class NormalAgent extends AbstarctAgent {
 
     private final ChatMemory redisChatMemory;
-    private final ToolService toolService;
-    private final ChatClient vectorChatClient;
 
-
-    @Override
-    public String contentSimple(String prompt, String conversationId) {
-        return super.contentSimple(prompt, conversationId);
-    }
 
     @Override
     public ChatModelType getChatModelType() {
-        return ChatModelType.BUY;
+        return ChatModelType.NORMAL;
     }
 
     @Override
     public String getSystemPrompt() {
-        return ChatClientSkills.BUY_PROMPT;
-    }
-
-    @Override
-    public Object[] tools() {
-        return new Object[]{
-                toolService
-        };
-    }
-
-    @Override
-    public ChatClient getchatClient() {
-        return vectorChatClient;
+        return ChatClientSkills.NORMAL_SKILL_PROMPT;
     }
 
     @Override
@@ -56,10 +36,6 @@ public class BuyAgent extends AbstarctAgent {
 
     @Override
     public List<Advisor> getAdvisor() {
-        return List.of(
-                MessageChatMemoryAdvisor
-                        .builder(redisChatMemory)
-                        .build()
-        );
+        return List.of(MessageChatMemoryAdvisor.builder(redisChatMemory).build());
     }
 }

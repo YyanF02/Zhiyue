@@ -1,10 +1,10 @@
 package com.ZhiyueSecondHand.factory.impl;
 
 import com.ZhiyueSecondHand.agent.Agent;
-import com.ZhiyueSecondHand.agent.BuyAgent;
-import com.ZhiyueSecondHand.agent.NormalAgent;
-import com.ZhiyueSecondHand.agent.RouterAgent;
-import com.ZhiyueSecondHand.agent.SellAgent;
+import com.ZhiyueSecondHand.agent.impl.BuyAgent;
+import com.ZhiyueSecondHand.agent.impl.NormalAgent;
+import com.ZhiyueSecondHand.agent.impl.RouterAgent;
+import com.ZhiyueSecondHand.agent.impl.SellAgent;
 import com.ZhiyueSecondHand.enums.ChatModelType;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;

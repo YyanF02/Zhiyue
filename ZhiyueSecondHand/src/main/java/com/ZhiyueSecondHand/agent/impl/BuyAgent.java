@@ -1,9 +1,11 @@
-package com.ZhiyueSecondHand.agent;
+package com.ZhiyueSecondHand.agent.impl;
 
+import com.ZhiyueSecondHand.agent.abstractAgent.AbstarctAgent;
 import com.ZhiyueSecondHand.constants.ChatClientSkills;
 import com.ZhiyueSecondHand.enums.ChatModelType;
 import com.ZhiyueSecondHand.tool.ToolService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.api.Advisor;
 import org.springframework.ai.chat.memory.ChatMemory;
@@ -14,21 +16,27 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
-public class SellAgent extends AbstarctAgent {
-    private final ToolService toolService;
+public class BuyAgent extends AbstarctAgent {
+
     private final ChatMemory redisChatMemory;
+    private final ToolService toolService;
+    private final ChatClient vectorChatClient;
 
 
     @Override
+    public String contentSimple(String prompt, String conversationId) {
+        return super.contentSimple(prompt, conversationId);
+    }
+
+    @Override
     public ChatModelType getChatModelType() {
-        return ChatModelType.SELL;
+        return ChatModelType.BUY;
     }
 
     @Override
     public String getSystemPrompt() {
-        return ChatClientSkills.SELL_PROMPT;
+        return ChatClientSkills.BUY_PROMPT;
     }
-
 
     @Override
     public Object[] tools() {
@@ -37,6 +45,10 @@ public class SellAgent extends AbstarctAgent {
         };
     }
 
+    @Override
+    public ChatClient getchatClient() {
+        return vectorChatClient;
+    }
 
     @Override
     public Map<String, Object> adviorsParams(String conversationId, String requestId) {
@@ -45,6 +57,10 @@ public class SellAgent extends AbstarctAgent {
 
     @Override
     public List<Advisor> getAdvisor() {
-        return List.of(MessageChatMemoryAdvisor.builder(redisChatMemory).build());
+        return List.of(
+                MessageChatMemoryAdvisor
+                        .builder(redisChatMemory)
+                        .build()
+        );
     }
 }

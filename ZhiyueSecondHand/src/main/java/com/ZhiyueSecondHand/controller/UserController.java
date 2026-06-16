@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * <p>
@@ -60,32 +62,28 @@ public class UserController {
             @RequestParam(value = "code", required = false) String code,
             HttpServletResponse response
     ) throws IOException {
-        if (code != null && !code.isEmpty()) {
-            Result<UserLoginVO> result = userService.QRCodeLogin(code, loginId);
-            if (result.getCode() == 200 && result.getData() != null) {
-                String redirectUrl = serverProperties.getVueUrl() +
-                        "/#/wechat-auth?loginId=" + loginId + "&code=" + code;
-                log.debug("重定向到： {}", redirectUrl);
-                response.sendRedirect(redirectUrl);
-            } else {
-                response.setContentType("application/json;charset=UTF-8");
-                response.getWriter().write(JSONUtil.toJsonStr(result));
-            }
-        } else {
-            Result<UserLoginVO> result = userService.QRCodeLogin(code, loginId);
-            response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(JSONUtil.toJsonStr(result));
+        Result<UserLoginVO> result = userService.QRCodeLogin(code, loginId);
+        if (code != null && !code.isEmpty() && result.getCode() == 200 && result.getData() != null) {
+            String redirectUrl = serverProperties.getVueUrl()
+                    + "/#/wechat-auth?loginId="
+                    + URLEncoder.encode(loginId, StandardCharsets.UTF_8)
+                    + "&code="
+                    + URLEncoder.encode(code, StandardCharsets.UTF_8);
+            log.debug("重定向到： {}", redirectUrl);
+            response.sendRedirect(redirectUrl);
         }
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().write(JSONUtil.toJsonStr(result));
     }
 
 
     @GetMapping("/wx/check")
     public String wxCheck(
-            @RequestParam(value = "signature" , required = false) String signature,
-            @RequestParam(value = "timestamp" , required = false) String timestamp,
-            @RequestParam(value = "nonce" , required = false) String nonce,
-            @RequestParam(value = "echostr" , required = false) String echostr
-    ){
+            @RequestParam(value = "signature", required = false) String signature,
+            @RequestParam(value = "timestamp", required = false) String timestamp,
+            @RequestParam(value = "nonce", required = false) String nonce,
+            @RequestParam(value = "echostr", required = false) String echostr
+    ) {
         log.debug("signature: {}, timestamp: {}, nonce: {}, echostr: {}", signature, timestamp, nonce, echostr);
         return echostr;
     }

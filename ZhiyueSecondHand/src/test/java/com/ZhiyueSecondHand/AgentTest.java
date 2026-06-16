@@ -1,6 +1,6 @@
 package com.ZhiyueSecondHand;
 
-import com.ZhiyueSecondHand.agent.RouterAgent;
+import com.ZhiyueSecondHand.agent.impl.RouterAgent;
 import com.ZhiyueSecondHand.util.UserContext;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
